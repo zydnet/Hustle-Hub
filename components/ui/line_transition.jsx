@@ -22,10 +22,10 @@ export default function LineGradient() {
       //      })}
       //   </div>
       <div className="max-w-[100vw] overflow-x-hidden">
-         <div className="ml-[-10vw] flex min-h-[30vw] min-w-[120vw] justify-center overflow-hidden bg-white ">
+         <div className="ml-[-10vw] flex min-h-[30vw] min-w-[120vw] justify-center overflow-hidden bg-white">
             {/* <p className="text-black bg-red-400">FEATURE</p> */}
          </div>
-         <div className="ml-[-5vw] mt-[-4vw] min-h-[6vw] min-w-[120vw] rotate-[5deg] justify-center overflow-hidden bg-white "></div>
+         <div className="ml-[-5vw] mt-[-4vw] min-h-[6vw] min-w-[120vw] rotate-[5deg] justify-center overflow-hidden bg-white"></div>
       </div>
    );
 }

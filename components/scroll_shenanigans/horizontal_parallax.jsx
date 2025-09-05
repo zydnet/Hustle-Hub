@@ -68,10 +68,10 @@ export default function HParallax({ featurePos }) {
    const [isFill, setIsFill] = useState(false);
 
    const featureRect = useRef(0);
-
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    useEffect(() => {
       featureRect.current = featurePos.current.getBoundingClientRect();
-   }, []);
+   }, [featurePos]);
 
    useEffect(() => {
       let lastScrollY = window.scrollY;
@@ -154,7 +154,6 @@ export default function HParallax({ featurePos }) {
          window.removeEventListener('scroll', handleScroll);
       };
    }, [activate]);
-
    useEffect(() => {
       const observer = new IntersectionObserver(
          ([entry]) => {
@@ -163,15 +162,17 @@ export default function HParallax({ featurePos }) {
          { root: null, rootMargin: '0px', threshold: 0 }
       );
 
-      if (circleRef.current) {
-         observer.observe(circleRef.current);
-         ////console.log('observing')
+      const node = circleRef.current; // ✅ store ref once
+
+      if (node) {
+         observer.observe(node);
+         ////console.log('observing');
       }
 
       return () => {
-         if (circleRef.current) {
-            observer.unobserve(circleRef.current);
-            ////console.log('not observing')
+         if (node) {
+            observer.unobserve(node);
+            ////console.log('not observing');
          }
       };
    }, []);
@@ -335,14 +336,15 @@ export default function HParallax({ featurePos }) {
                            <div className="flex flex-col gap-y-[0.1vw]">
                               <div className="flex-1"></div>
                               <p className="max-w-[10vw] leading-[1vw] max-sm:max-w-[30vw] max-sm:leading-[4vw]">
-                                 The HustleHub<br />
+                                 The HustleHub
+                                 <br />
                                  Mothership
                               </p>
                               {/* <div className='h-[1px] my-[0.5vw] bg max-sm:hidden-black'></div> */}
                               <p className="max-w-[10vw] leading-[.7vw] text-[#575757] max-sm:hidden max-sm:text-[2vw] max-sm:leading-[1.5vw] sm:text-[0.6vw]">
                                  <i>&quot;I&apos;m tired boss&quot;</i>
-                                 <br /> HustleHub plans to expand
-                                 in every dev's computer
+                                 <br /> HustleHub plans to expand in every dev's
+                                 computer
                               </p>
                            </div>
                         </div>
@@ -383,10 +385,11 @@ export default function HParallax({ featurePos }) {
                            <div className="flex flex-col gap-y-[0.1vw]">
                               <div className="flex-1"></div>
                               <p className="max-w-[10vw] leading-[1vw] max-sm:max-w-[30vw] max-sm:leading-[4vw]">
-                              So many rejections… but tracking that 1 selection
+                                 So many rejections… but tracking that 1
+                                 selection
                               </p>
                               <p className="max-w-[10vw] leading-[.7vw] text-[#575757] max-sm:hidden max-sm:text-[2vw] max-sm:leading-[1.5vw] sm:text-[0.6vw]">
-                              Persistence pays off in HustleHub
+                                 Persistence pays off in HustleHub
                               </p>
                            </div>
                         </div>

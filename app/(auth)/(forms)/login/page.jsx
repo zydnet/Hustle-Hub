@@ -24,6 +24,10 @@ function LoginForm() {
 
    const { setUserID } = useContext(UserContext);
 
+   const redirectToHome = () => {
+      router.push('/dashboard');
+   };
+
    const handleChange = (e) => {
       const { id, value } = e.target;
       setState((prevState) => ({
@@ -51,66 +55,41 @@ function LoginForm() {
       if (token) {
          redirectToHome();
       }
-   }, []);
+   }, [redirectToHome]);
 
-   const handleSubmitClick = async (e) => {
+   const handleSubmitClick = (e) => {
       e.preventDefault();
-      addNotification('Login request sent. Please wait.');
-      const payload = {
-         username: state.username,
-         password: state.password,
-      };
 
-      try {
-         const response = await fetch('/login/api', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-         });
+      if (!state.username || !state.password) {
+         addNotification('Please fill all fields.', NOTIF_TYPE.ERROR);
+         return;
+      }
 
-         if (response.ok) {
-            const data = await response.json();
-            if (response.status === 202) {
-               setState((prevState) => ({
-                  ...prevState,
-                  successMessage: 'Login successful.',
-               }));
-
-               addNotification('Login successful.', NOTIF_TYPE.SUCCESS);
-
-               setUserID(state.username);
-               localStorage.setItem(
-                  ACCESS_TOKEN_NAME,
-                  JSON.stringify(data.data.token)
-               );
-               redirectToHome();
-            }
-            // else if(response.code === 204){
-            //     props.showError("Username and password do not match");
-            // }
-            else {
-               addNotification(
-                  `Login failed. Please try again. (${Number(response.status)})`,
-                  NOTIF_TYPE.ERROR
-               );
-               // alert("Username does not exists");
-            }
-         } else {
-            addNotification(
-               `Login failed. Please try again. (${Number(response.status)})`,
-               NOTIF_TYPE.ERROR
-            );
-         }
-      } catch (err) {
+      if (state.password.length < 8) {
          addNotification(
-            'Something went wrong during login. Please try again.',
+            'Password must be at least 8 characters.',
             NOTIF_TYPE.ERROR
          );
+         return;
       }
-   };
 
-   const redirectToHome = () => {
-      router.push('/dashboard');
+      // Simulate success
+      setState((prevState) => ({
+         ...prevState,
+         successMessage: 'Login successful.',
+      }));
+
+      addNotification('Login successful.', NOTIF_TYPE.SUCCESS);
+
+      setUserID(state.username);
+
+      // Store dummy token in localStorage
+      localStorage.setItem(
+         ACCESS_TOKEN_NAME,
+         JSON.stringify('dummy_token_123')
+      );
+
+      redirectToHome();
    };
 
    return (
@@ -184,11 +163,6 @@ function LoginForm() {
                >
                   Login
                </button>
-               {/* <button 
-                        type="submit"
-                        className='w-full min-h-[56px] rounded-[30px] border-white border-solid border-[1px] text-white bg-black mt-[30px] flex justify-center items-center'>
-                            <Image src={Google} className='pr-[20px]' height={55}/><span className='leading-[8px]'>Login with Google</span>
-               </button> */}
             </form>
          </div>
       </div>

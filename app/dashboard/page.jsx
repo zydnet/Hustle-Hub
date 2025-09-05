@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { SineWaveLoader } from '@/components/ui/sine_loader';
-import { API_BASE_URL, ACCESS_TOKEN_NAME } from '@/app/_utils/api_constants';
-import axios from 'axios';
+import { ACCESS_TOKEN_NAME } from '@/app/_utils/api_constants';
 import Image from 'next/image';
 import { useNotifications } from '@/app/_contexts/notification';
 import { NOTIF_TYPE } from '../_enums/notification';
@@ -15,34 +14,19 @@ export default function Dashboard() {
    const { addNotification } = useNotifications();
 
    useEffect(() => {
-      addNotification('Redirecting..');
-      const header = {
-         Authorization:
-            'Token ' + JSON.parse(localStorage.getItem(ACCESS_TOKEN_NAME)),
-      };
-      axios
-         .get(API_BASE_URL + '/courses', { headers: header })
-         .then(function (response) {
-            if (response.status === 200) {
-               router.push('/dashboard/home');
-               setProgress(1);
-            }
-         })
-         .catch(function (error) {
-            if (error.response.status == 401) {
-               addNotification('Session expired', NOTIF_TYPE.ERROR);
-               router.push('/login');
-            }
-            if (error.response.status == 404) {
-               setProgress(1);
-               router.push('/add');
-            } else {
-               addNotification(
-                  'Something went wrong. ' + error.response.status,
-                  NOTIF_TYPE.ERROR
-               );
-            }
-         });
+      const token = localStorage.getItem(ACCESS_TOKEN_NAME);
+
+      if (!token) {
+         addNotification('Please login first.', NOTIF_TYPE.ERROR);
+         router.push('/login');
+         return;
+      }
+
+      addNotification('Redirecting...');
+      setTimeout(() => {
+         setProgress(1);
+         router.push('/dashboard/home');
+      }, 1200); // small delay to show loader
    }, []);
 
    return (

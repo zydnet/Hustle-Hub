@@ -37,7 +37,7 @@ export const SineWave = () => {
       animate();
 
       return () => cancelAnimationFrame(animationFrame);
-   }, []);
+   }, [scaleY]); // ✅ added dependency
 
    return (
       <svg

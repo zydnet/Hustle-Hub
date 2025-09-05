@@ -128,7 +128,7 @@ const SineWave = () => {
 
             const y =
                Math.sin(x * frequency * 0.001 * Math.PI * 2 - phase) *
-               amplitude +
+                  amplitude +
                scaleY;
 
             newPoints.push(`${x},${y.toFixed(2)}`);

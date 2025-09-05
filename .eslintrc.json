@@ -12,11 +12,16 @@
       "prettier/prettier": "warn",
       "react/prop-types": "off",
       "tailwindcss/classnames-order": "warn",
-      // suppress errors for missing 'import React' in files
       "react/react-in-jsx-scope": "off",
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+      "react/jsx-filename-extension": [
+         1,
+         { "extensions": [".js", ".jsx", ".tsx"] }
+      ]
    },
-   "ignorePatterns": ["components/scroll_shenanigans/stash", "app/(lander)/test/*"],
+   "ignorePatterns": [
+      "components/scroll_shenanigans/stash",
+      "app/(lander)/test/*"
+   ],
    "settings": {
       "react": {
          "version": "detect"

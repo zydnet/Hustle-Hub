@@ -42,15 +42,26 @@ export default function Parallax() {
          const containerRect = container.getBoundingClientRect();
          // const textRect = textEl.getBoundingClientRect();
 
-         if (containerRect.top <= window.innerHeight) { // if container is scrolled past
-            if (containerRect.top <= -1*((Math.sqrt(Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2)) - window.innerHeight))){ // if greater than inscription radius
+         if (containerRect.top <= window.innerHeight) {
+            // if container is scrolled past
+            if (
+               containerRect.top <=
+               -1 *
+                  (Math.sqrt(
+                     Math.pow(window.innerHeight, 2) +
+                        Math.pow(window.innerWidth, 2)
+                  ) -
+                     window.innerHeight)
+            ) {
+               // if greater than inscription radius
                // setIsFill(true);
                // console.log(containerRect.top, -1*((Math.sqrt(Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2)) - window.innerHeight)/2))
-            } else { // scale till inscription radius
+            } else {
+               // scale till inscription radius
                setIsFill(false);
                const viewportHeight = window.innerHeight;
                const scrollProgress = 1 - containerRect.top / viewportHeight;
-               scale.current = (Math.max(scrollProgress, 0));
+               scale.current = Math.max(scrollProgress, 0);
                // console.log('scaling up ', scale.current, containerRect.top);
                scalingEl.style.transform = `scale(${scale.current})`;
             }
@@ -74,20 +85,21 @@ export default function Parallax() {
             // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
             className={`absolute flex w-full overflow-clip rounded-full bg-gradient-to-r from-black to-blue-300`}
             style={
-               isFill?{}:
-               {
-                  minHeight: window.innerHeight,
-                  minWidth: window.innerHeight,
-                  // left: -window.innerWidth/2
-                  // left: -(
-                  //    Math.sqrt(
-                  //       Math.pow(window.innerHeight, 2) +
-                  //          Math.pow(window.innerWidth, 2)
-                  //    ) /
-                  //       2 -
-                  //    window.innerWidth / 2
-                  // ),
-               }
+               isFill
+                  ? {}
+                  : {
+                       minHeight: window.innerHeight,
+                       minWidth: window.innerHeight,
+                       // left: -window.innerWidth/2
+                       // left: -(
+                       //    Math.sqrt(
+                       //       Math.pow(window.innerHeight, 2) +
+                       //          Math.pow(window.innerWidth, 2)
+                       //    ) /
+                       //       2 -
+                       //    window.innerWidth / 2
+                       // ),
+                    }
             }
          >
             <p

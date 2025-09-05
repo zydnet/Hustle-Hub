@@ -17,6 +17,8 @@ import { UserContext } from '@/app/_contexts/user_name';
 import User from '@/components/svg/user';
 import { useNotifications } from '@/app/_contexts/notification';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { BASE_URL } from '@/app/_utils/api_constants';
 
 export default function NavBar() {
    const pathname = usePathname();
@@ -62,16 +64,21 @@ export default function NavBar() {
          });
    }
    return (
-      <nav className="flex h-[5vw] max-sm:h-[72px] max-sm:pt-3 max-sm:px-3">
+      <nav className="flex h-[5vw] max-sm:h-[72px] max-sm:px-3 max-sm:pt-3">
          <div className="mb-2 flex h-[5vw] flex-1 items-center p-[1vw] text-[2vw] max-sm:h-[72px] max-sm:flex-1 max-sm:text-3xl">
-            <Image
-               src={Logo}
-               alt="logo"
-               className="mr-[-0.5vw] max-sm:size-16 sm:size-[4vw]"
-            />
-            <p className="ml-4 max-sm:ml-2 max-sm:flex-1 max-sm:text-4xl">
-               Hustle-Hub
-            </p>
+            <Link
+               href={BASE_URL}
+               className="flex items-center rounded-full transition duration-300 hover:rotate-[360deg]"
+            >
+               <Image
+                  src={Logo}
+                  alt="logo"
+                  className="mr-[-0.5vw] max-sm:size-16 sm:size-[4vw]"
+               />
+               <p className="ml-4 max-sm:ml-2 max-sm:flex-1 max-sm:text-4xl">
+                  Hustle-Hub
+               </p>
+            </Link>
          </div>
          <div className="flex justify-center max-sm:hidden">
             <ul className="flex items-center justify-center text-[1.5vw]">

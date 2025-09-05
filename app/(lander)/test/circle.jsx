@@ -12,7 +12,7 @@ export default function CircleScale() {
    const winW = useRef(0);
    const prev = useRef(0);
    const [windH, setWindH] = useState(0);
-   const [isFill, setIsFill] = useState(false)
+   const [isFill, setIsFill] = useState(false);
 
    useEffect(() => {
       winH.current = window.innerHeight;
@@ -101,7 +101,7 @@ export default function CircleScale() {
          ref={circleRef}
       >
          <div
-            className={`rounded-full bg-white ${h > windH ? isFill?'sticky top-0':'fixed top-[50vh] -translate-y-1/2' : ''}`}
+            className={`rounded-full bg-white ${h > windH ? (isFill ? 'sticky top-0' : 'fixed top-[50vh] -translate-y-1/2') : ''}`}
             style={{
                minHeight: `${h}px`,
                maxHeight: `${h}px`,

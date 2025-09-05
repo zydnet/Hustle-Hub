@@ -14,6 +14,7 @@ export const TimetableContext = createContext();
 export const TimetableProvider = ({ children }) => {
    const [timetable, setTimetable] = useState([[null, null, null, null, null]]);
    const router = useRouter();
+
    useEffect(() => {
       if (sessionStorage.getItem(ACCESS_TIMETABLE_NAME) != null) {
          setTimetable(
@@ -52,7 +53,7 @@ export const TimetableProvider = ({ children }) => {
          fetchTimetable();
       }
       console.log('Setting timetable context ', timetable);
-   }, []);
+   }, [router, timetable]); // ✅ add dependencies here
 
    return (
       <TimetableContext.Provider value={{ timetable, setTimetable }}>

@@ -85,7 +85,7 @@ export default function Home() {
                   <p className="flex flex-1 justify-end text-end max-md:flex-[3]">
                      2025
                      <br />
-                     HERE TO SERVE YOUR NEEDS YOUR WAY  {';)'}
+                     HERE TO SERVE YOUR NEEDS YOUR WAY {';)'}
                   </p>
                </div>
                <p className="text-[18vw] font-bold leading-[0.8] tracking-tighter max-md:flex max-md:flex-col max-md:items-start max-md:text-[39vw]">

@@ -73,8 +73,8 @@ export default function Description() {
             rect.top <= 0
                ? 0
                : rect.top <= RISE_LEVEL * window.innerHeight
-                  ? rect.top / (RISE_LEVEL * window.innerHeight)
-                  : 1;
+                 ? rect.top / (RISE_LEVEL * window.innerHeight)
+                 : 1;
 
          const newPercent = easeInOutCubic(linearPercent);
 
@@ -143,15 +143,14 @@ export default function Description() {
                   style={
                      windW < 680
                         ? {
-                           maxWidth: `${100 * (1 - 0.5 * percent.current + 0.25)}vw`,
-                        }
+                             maxWidth: `${100 * (1 - 0.5 * percent.current + 0.25)}vw`,
+                          }
                         : {}
                   }
                   className="md:max-w-[40vw]"
                >
-                  Plan smarter,{' '}
-                  <span className="font-bold">track better</span> and{' '}
-                  <span className="font-bold">stay ahead</span>—HustleHub
+                  Plan smarter, <span className="font-bold">track better</span>{' '}
+                  and <span className="font-bold">stay ahead</span>—HustleHub
                   does the hard work for you .
                   <br />
                </p>
@@ -195,7 +194,8 @@ export default function Description() {
                >
                   <p className="m-[2vw] mb-[-2vw] text-[3vw]">WHAT? WHY?</p>
                   <p className="m-[2vw] text-[1.5vw]">
-                  Hustle Hub helps you plan your moves and stay on top of your schedule. Who else knows your grind better than you?..
+                     Hustle Hub helps you plan your moves and stay on top of
+                     your schedule. Who else knows your grind better than you?..
                   </p>
                </div>
                <div

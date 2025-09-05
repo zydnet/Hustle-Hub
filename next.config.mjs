@@ -34,7 +34,7 @@ const nextConfig = {
                   value: 'no-cache',
                },
             ],
-         }
+         },
       ];
    },
    async redirects() {

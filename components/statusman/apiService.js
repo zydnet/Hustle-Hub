@@ -1,7 +1,9 @@
 // API Service for Job Applications
 // This file contains functions that can be easily swapped between localStorage and API calls
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+// eslint-disable-next-line no-unused-vars
+const API_BASE_URL =
+   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
 // For now, we'll use localStorage, but this structure makes it easy to switch to API calls
 export const jobApplicationsAPI = {
@@ -11,7 +13,7 @@ export const jobApplicationsAPI = {
          // TODO: Replace with actual API call
          // const response = await fetch(`${API_BASE_URL}/job-applications`);
          // return await response.json();
-         
+
          // Current localStorage implementation
          const saved = localStorage.getItem('job_applications');
          return saved ? JSON.parse(saved) : [];
@@ -31,9 +33,11 @@ export const jobApplicationsAPI = {
          //    body: JSON.stringify(application)
          // });
          // return await response.json();
-         
+
          // Current localStorage implementation
-         const existing = JSON.parse(localStorage.getItem('job_applications') || '[]');
+         const existing = JSON.parse(
+            localStorage.getItem('job_applications') || '[]'
+         );
          const newApp = { ...application, id: Date.now() };
          const updated = [...existing, newApp];
          localStorage.setItem('job_applications', JSON.stringify(updated));
@@ -54,14 +58,16 @@ export const jobApplicationsAPI = {
          //    body: JSON.stringify(updates)
          // });
          // return await response.json();
-         
+
          // Current localStorage implementation
-         const existing = JSON.parse(localStorage.getItem('job_applications') || '[]');
-         const updated = existing.map(app => 
+         const existing = JSON.parse(
+            localStorage.getItem('job_applications') || '[]'
+         );
+         const updated = existing.map((app) =>
             app.id === id ? { ...app, ...updates } : app
          );
          localStorage.setItem('job_applications', JSON.stringify(updated));
-         return updated.find(app => app.id === id);
+         return updated.find((app) => app.id === id);
       } catch (error) {
          console.error('Error updating job application:', error);
          throw error;
@@ -76,10 +82,12 @@ export const jobApplicationsAPI = {
          //    method: 'DELETE'
          // });
          // return response.ok;
-         
+
          // Current localStorage implementation
-         const existing = JSON.parse(localStorage.getItem('job_applications') || '[]');
-         const updated = existing.filter(app => app.id !== id);
+         const existing = JSON.parse(
+            localStorage.getItem('job_applications') || '[]'
+         );
+         const updated = existing.filter((app) => app.id !== id);
          localStorage.setItem('job_applications', JSON.stringify(updated));
          return true;
       } catch (error) {
@@ -98,28 +106,36 @@ export const jobApplicationsAPI = {
          //    body: JSON.stringify({ status: newStatus })
          // });
          // return await response.json();
-         
+
          // Current localStorage implementation
-         const existing = JSON.parse(localStorage.getItem('job_applications') || '[]');
-         const updated = existing.map(app => {
+         const existing = JSON.parse(
+            localStorage.getItem('job_applications') || '[]'
+         );
+         const updated = existing.map((app) => {
             if (app.id === id) {
                const now = new Date().toISOString().split('T')[0];
                return {
                   ...app,
                   status: newStatus,
-                  appliedDate: newStatus === 'Applied' && !app.appliedDate ? now : app.appliedDate,
-                  interviewDate: newStatus === 'Interview' && !app.interviewDate ? now : app.interviewDate
+                  appliedDate:
+                     newStatus === 'Applied' && !app.appliedDate
+                        ? now
+                        : app.appliedDate,
+                  interviewDate:
+                     newStatus === 'Interview' && !app.interviewDate
+                        ? now
+                        : app.interviewDate,
                };
             }
             return app;
          });
          localStorage.setItem('job_applications', JSON.stringify(updated));
-         return updated.find(app => app.id === id);
+         return updated.find((app) => app.id === id);
       } catch (error) {
          console.error('Error moving job application:', error);
          throw error;
       }
-   }
+   },
 };
 
 // Helper function to check if we're using API or localStorage
@@ -128,9 +144,12 @@ export const isUsingAPI = () => {
 };
 
 // Error handling utility
-export const handleAPIError = (error, fallbackMessage = 'An error occurred') => {
+export const handleAPIError = (
+   error,
+   fallbackMessage = 'An error occurred'
+) => {
    console.error('API Error:', error);
-   
+
    if (error.response) {
       // Server responded with error status
       return `Server error: ${error.response.status} - ${error.response.data?.message || fallbackMessage}`;

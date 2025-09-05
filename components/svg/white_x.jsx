@@ -4,7 +4,7 @@ export default function WhiteX() {
          xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 24 24"
          fill="currentColor"
-         className="before: size-[2.7vw] rounded-full border-2 fill-current border-white text-white max-sm:size-12 max-sm:text-white"
+         className="before: size-[2.7vw] rounded-full border-2 border-white fill-current text-white max-sm:size-12 max-sm:text-white"
       >
          <path
             fillRule="evenodd"

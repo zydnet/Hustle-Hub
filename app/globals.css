@@ -62,3 +62,16 @@ body {
       zoom: 150%;
    }
 }
+.parallax {
+   position: relative;
+   overflow: hidden;
+   letter-spacing: -2px;
+   line-height: 0.8;
+   display: flex;
+}
+
+.scroller {
+   display: flex;
+   white-space: nowrap;
+   flex-wrap: nowrap;
+}

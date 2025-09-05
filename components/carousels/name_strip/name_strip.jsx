@@ -40,8 +40,8 @@ function ParallaxText({ children, baseVelocity = 100 }) {
    });
 
    return (
-      <div className="parallax min-w-[101vw] overflow-x-hidden">
-         <motion.div className="scroller flex" style={{ x }}>
+      <div className="parallax min-w-[101vw]">
+         <motion.div className="scroller" style={{ x }}>
             <span>{children} </span>
             <span>{children} </span>
             <span>{children} </span>

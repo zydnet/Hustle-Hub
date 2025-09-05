@@ -9,9 +9,8 @@ const urbanist = Urbanist({ subsets: ['latin'] });
 export const metadata = {
    title: 'HustleHub - Job Application & Networking Tracker',
    description:
-     'Track job applications, manage networking, schedule meetings, and analyze progress — all in one dashboard.',
- };
- 
+      'Track job applications, manage networking, schedule meetings, and analyze progress — all in one dashboard.',
+};
 
 export default function RootLayout({ children }) {
    return (
@@ -19,8 +18,14 @@ export default function RootLayout({ children }) {
          <head>
             {/* Favicon (use favicon.ico or your icon.png) */}
             <link rel="icon" href="/favicon_io" sizes="any" />
-            <meta name="keywords" content="job application tracker, resume builder, career dashboard, HustleHub, networking, internship, career, productivity" />
-            <meta property="og:title" content="HustleHub - Job & Networking Tracker" />
+            <meta
+               name="keywords"
+               content="job application tracker, resume builder, career dashboard, HustleHub, networking, internship, career, productivity"
+            />
+            <meta
+               property="og:title"
+               content="HustleHub - Job & Networking Tracker"
+            />
          </head>
          <body className={urbanist.className}>
             <GoogleAnalytics />

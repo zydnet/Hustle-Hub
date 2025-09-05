@@ -30,9 +30,9 @@ export default function Parallax() {
       };
    }, []);
 
-   useEffect(()=>{
-    console.log("activate cuz linting")
- },[activate])
+   useEffect(() => {
+      console.log('activate cuz linting');
+   }, [activate]);
 
    useEffect(() => {
       const container = containerRef.current;
@@ -61,7 +61,7 @@ export default function Parallax() {
             const scrollProgress = 1 - containerRect.top / viewportHeight;
             scale.current = Math.min(Math.max(scrollProgress, 0), 1);
 
-            console.log("scaling up ", scale.current, containerRect.top)
+            console.log('scaling up ', scale.current, containerRect.top);
             // console.log("thisi s offset ", (1-scale.current)*Math.sqrt(
             //             Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2)
             //          )/2)
@@ -81,17 +81,19 @@ export default function Parallax() {
    return (
       <div
          ref={containerRef}
-         className="relative flex max-w-[100vw] bg-red-500 min-h-[2px]"
-         style={{
-            // minHeight: Math.sqrt(
-            //    Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2)
-            // ),
-         }}
+         className="relative flex min-h-[2px] max-w-[100vw] bg-red-500"
+         style={
+            {
+               // minHeight: Math.sqrt(
+               //    Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2)
+               // ),
+            }
+         }
       >
          {/* This invisible element helps measure scroll position without being affected by scaling */}
          <div
             ref={scalingRef}
-            className={`absolute top-0 flex w-full ${isFill?'':'items-center rounded-full'} overflow-clip bg-gradient-to-r from-black to-blue-300`}
+            className={`absolute top-0 flex w-full ${isFill ? '' : 'items-center rounded-full'} overflow-clip bg-gradient-to-r from-black to-blue-300`}
             style={
                !isFill
                   ? {
@@ -119,19 +121,24 @@ export default function Parallax() {
                           Math.pow(window.innerHeight, 2) +
                              Math.pow(window.innerWidth, 2)
                        ),
-                       top: `-${Math.sqrt(
-                        Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2)
-                     )/2-window.innerHeight/2}px`,
+                       top: `-${
+                          Math.sqrt(
+                             Math.pow(window.innerHeight, 2) +
+                                Math.pow(window.innerWidth, 2)
+                          ) /
+                             2 -
+                          window.innerHeight / 2
+                       }px`,
                     }
                   : {
-                     // left: -(
-                     //      Math.sqrt(
-                     //         Math.pow(window.innerHeight, 2) +
-                     //            Math.pow(window.innerWidth, 2)
-                     //      ) /
-                     //         2 -
-                     //      window.innerWidth / 2
-                     //   ),
+                       // left: -(
+                       //      Math.sqrt(
+                       //         Math.pow(window.innerHeight, 2) +
+                       //            Math.pow(window.innerWidth, 2)
+                       //      ) /
+                       //         2 -
+                       //      window.innerWidth / 2
+                       //   ),
                        minHeight: 2.5 * window.innerWidth,
                        maxHeight: 2.5 * window.innerWidth,
                     }

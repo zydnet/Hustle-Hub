@@ -55,8 +55,7 @@ export default function Page() {
                      SHITTY DESIGN
                   </p>
                   <p className="flex flex-1 justify-start">
-                  DEADLINES MISSED?
-
+                     DEADLINES MISSED?
                      <br />
                      WHAT MEETING??
                      <br />
@@ -104,7 +103,7 @@ const SineWave = () => {
 
             const y =
                Math.sin(x * frequency * 0.001 * Math.PI * 2 - phase) *
-               amplitude +
+                  amplitude +
                scaleY;
 
             newPoints.push(`${x},${y.toFixed(2)}`);

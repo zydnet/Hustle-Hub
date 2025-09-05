@@ -21,7 +21,6 @@ export default function Layout({ children }) {
             <NavBar />
          </div>
          <div className="h-full bg-black">{children}</div>
-         
       </div>
    );
 }

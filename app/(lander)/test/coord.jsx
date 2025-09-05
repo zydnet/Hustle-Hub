@@ -61,32 +61,36 @@ export default function Coord() {
       <div className="flex min-h-[300vh] flex-col bg-gradient-to-b from-black to-blue-300 px-10">
          <div
             ref={scaleBoxRef}
-            className="sticky top-[50vh] -translate-y-1/2 flex items-center justify-center rounded-full bg-gradient-to-b from-white to-green-500"
-            style={{
-               // minHeight: Math.sqrt(
-               //    Math.pow(window.innerHeight, 2) +
-               //       Math.pow(window.innerWidth, 2)
-               // ),
-               // minWidth: Math.sqrt(
-               //    Math.pow(window.innerHeight, 2) +
-               //       Math.pow(window.innerWidth, 2)
-               // ),
-               // top:
-               //    -(
-               //       Math.sqrt(
-               //          Math.pow(window.innerHeight, 2) +
-               //             Math.pow(window.innerWidth, 2)
-               //       ) - window.innerHeight
-               //    ) / 2,
-            }}
+            className="sticky top-[50vh] flex -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-b from-white to-green-500"
+            style={
+               {
+                  // minHeight: Math.sqrt(
+                  //    Math.pow(window.innerHeight, 2) +
+                  //       Math.pow(window.innerWidth, 2)
+                  // ),
+                  // minWidth: Math.sqrt(
+                  //    Math.pow(window.innerHeight, 2) +
+                  //       Math.pow(window.innerWidth, 2)
+                  // ),
+                  // top:
+                  //    -(
+                  //       Math.sqrt(
+                  //          Math.pow(window.innerHeight, 2) +
+                  //             Math.pow(window.innerWidth, 2)
+                  //       ) - window.innerHeight
+                  //    ) / 2,
+               }
+            }
          >
             <div
                ref={containerRef}
-               style={{
-                  // minHeight: window.innerHeight,
-                  // minWidth: window.innerHeight,
-               }}
-               className="bg-gradient-to-b from-yellow-500 to-red-400 size-64"
+               style={
+                  {
+                     // minHeight: window.innerHeight,
+                     // minWidth: window.innerHeight,
+                  }
+               }
+               className="size-64 bg-gradient-to-b from-yellow-500 to-red-400"
             >
                hello
             </div>

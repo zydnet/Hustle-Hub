@@ -27,7 +27,7 @@ export default function ContactFooter() {
                      <p className="text-[2vw] text-[#8a8a8a] max-md:text-[5vw]">
                         A Project By
                      </p>
-                     
+
                      <p className="ease flex rounded-full px-[1vw] text-[1.5vw] transition duration-300 hover:bg-black hover:text-white max-md:text-[4vw]">
                         <Link
                            href={'https://github.com/zydnet'}
@@ -52,7 +52,6 @@ export default function ContactFooter() {
                            Hustle-Hub
                         </Link>
                      </p>
-                    
                   </div>
                </div>
                <div
@@ -92,7 +91,7 @@ export default function ContactFooter() {
                <div className="ml-[0.1vh] mt-[0.1vh] min-w-[15vw] rounded-full border-[0.5vh] border-solid border-black bg-black max-md:hidden max-md:min-w-[40vw]"></div>
                <div className="ml-[0.1vh] mt-[0.1vh] min-w-[15vw] rounded-full border-[0.5vh] border-solid border-black bg-black max-md:hidden max-md:min-w-[40vw]"></div>
                <div className="ml-[0.1vh] mt-[0.1vh] min-w-[15vw] rounded-full border-[0.5vh] border-solid border-black bg-black max-md:min-w-[40vw]"></div>
-               
+
                <div className="ml-[0.1vh] mt-[0.1vh] min-w-[15vw] rounded-full border-[0.5vh] border-solid border-black bg-black max-md:min-w-[40vw]"></div>
                <div className="ml-[0.1vh] mt-[0.1vh] min-w-[15vw] rounded-full border-[0.5vh] border-solid border-black bg-black max-md:min-w-[40vw]"></div>
                <div className="ml-[0.1vh] mt-[0.1vh] min-w-[15vw] rounded-full border-[0.5vh] border-solid border-black bg-black max-md:min-w-[40vw]"></div>

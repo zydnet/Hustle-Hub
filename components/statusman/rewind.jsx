@@ -4,8 +4,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-
-import Image from 'next/image';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -28,8 +26,7 @@ function ButtonField(props) {
          ref={ref}
          aria-label={ariaLabel}
          onClick={() => setOpen?.((prev) => !prev)}
-      >
-      </Button>
+      />
    );
 }
 
@@ -50,9 +47,10 @@ function ButtonDatePicker(props) {
 
 export default function PickerWithButtonField({ setDateCurr }) {
    const [value, setValue] = useState(dayjs());
+
    useEffect(() => {
       setDateCurr(value);
-   }, [value]);
+   }, [value, setDateCurr]);
 
    const darkTheme = createTheme({
       palette: {

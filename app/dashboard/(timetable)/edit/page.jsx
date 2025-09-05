@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import XSvg from '@/components/svg/circle_x.jsx';
 import CheckSvg from '@/components/svg/check.jsx';
 import PlusSvg from '@/components/svg/plus.jsx';
@@ -56,8 +56,8 @@ export default function EditTable() {
       }
    }, [popupDecision]);
 
-   const handleSaveTimetable = () => {
-      const nullLessTableData = removeNull(tableData)
+   const handleSaveTimetable = useCallback(() => {
+      const nullLessTableData = removeNull(tableData);
       addNotification('Request sent. Please wait.');
       const header = {
          Authorization:
@@ -85,7 +85,7 @@ export default function EditTable() {
                }
             }
          });
-   };
+   }, [tableData, addNotification, router, setTimetable]);
 
    const notify = (message) => {
       addNotification(message);
