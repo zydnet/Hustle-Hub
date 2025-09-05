@@ -47,18 +47,16 @@ export default function EditTable() {
       }
    }, [timetable]);
 
-   useEffect(() => {
-      if (popupDecision == 'Save') {
-         handleSaveTimetable();
-      } else if (popupDecision == 'Discard') {
-         addNotification('Changes discarded.');
-         router.push('/dashboard/table');
-      }
-   }, [popupDecision]);
+   const notify = useCallback(
+      (message) => {
+         addNotification(message);
+      },
+      [addNotification]
+   );
 
    const handleSaveTimetable = useCallback(() => {
       const nullLessTableData = removeNull(tableData);
-      addNotification('Request sent. Please wait.');
+      notify('Request sent. Please wait.');
       const header = {
          Authorization:
             'Token ' + JSON.parse(localStorage.getItem(ACCESS_TOKEN_NAME)),
@@ -85,11 +83,16 @@ export default function EditTable() {
                }
             }
          });
-   }, [tableData, addNotification, router, setTimetable]);
+   }, [tableData, notify, router, setTimetable]);
 
-   const notify = (message) => {
-      addNotification(message);
-   };
+   useEffect(() => {
+      if (popupDecision == 'Save') {
+         handleSaveTimetable();
+      } else if (popupDecision == 'Discard') {
+         addNotification('Changes discarded.');
+         router.push('/dashboard/table');
+      }
+   }, [popupDecision, handleSaveTimetable, addNotification, router]);
 
    const handleUpdate = ({ data, row, col }) => {
       var updatedTable = [...tableData];

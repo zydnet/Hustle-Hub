@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { ACCESS_TOKEN_NAME } from '@/app/_utils/api_constants';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -16,17 +16,17 @@ function LoginForm() {
       password: '',
       successMessage: null,
    });
+
+   const [passwordVisible, setPasswordVisible] = useState({ password: false });
+
    const router = useRouter();
-   const { addNotification } = useNotifications();
-   const [passwordVisible, setPasswordVisible] = useState({
-      password: false,
-   });
-
    const { setUserID } = useContext(UserContext);
+   const { addNotification } = useNotifications();
 
-   const redirectToHome = () => {
+   // ✅ Stable function so it won’t trigger lint warnings
+   const redirectToHome = useCallback(() => {
       router.push('/dashboard');
-   };
+   }, [router]);
 
    const handleChange = (e) => {
       const { id, value } = e.target;
@@ -36,6 +36,7 @@ function LoginForm() {
       }));
    };
 
+   // ✅ Toast message from cookie
    useEffect(() => {
       const cookie = document.cookie
          .split('; ')
@@ -44,12 +45,11 @@ function LoginForm() {
       if (cookie) {
          const message = decodeURIComponent(cookie.split('=')[1]);
          addNotification(message);
-
-         // clear cookie after notification
-         document.cookie = 'toastMessage=; Max-Age=0; path=/';
+         document.cookie = 'toastMessage=; Max-Age=0; path=/'; // clear cookie
       }
-   });
+   }, [addNotification]);
 
+   // ✅ Check if already logged in
    useEffect(() => {
       const token = localStorage.getItem(ACCESS_TOKEN_NAME);
       if (token) {
@@ -108,7 +108,7 @@ function LoginForm() {
             </div>
             <form onSubmit={handleSubmitClick}>
                <div className="flex flex-col">
-                  <label htmlFor="Username1">Username</label>
+                  <label htmlFor="username">Username</label>
                   <input
                      type="text"
                      id="username"
@@ -120,7 +120,7 @@ function LoginForm() {
                   />
                </div>
                <div className="mt-[20px] flex">
-                  <label className="flex-1" htmlFor="exampleInputPassword1">
+                  <label className="flex-1" htmlFor="password">
                      Password
                   </label>
                </div>
@@ -137,12 +137,12 @@ function LoginForm() {
                   <button
                      type="button"
                      className="ml-[5px] min-w-[35px]"
-                     onClick={() => {
-                        setPasswordVisible({
-                           ...passwordVisible,
-                           password: !passwordVisible.password,
-                        });
-                     }}
+                     onClick={() =>
+                        setPasswordVisible((prev) => ({
+                           ...prev,
+                           password: !prev.password,
+                        }))
+                     }
                   >
                      {passwordVisible.password ? <Eye /> : <EyeSlash />}
                   </button>
@@ -158,8 +158,12 @@ function LoginForm() {
                </div>
                <button
                   type="submit"
-                  disabled={state.password.length < 8 && false}
-                  className={`min-h-[56px] w-full rounded-[30px] border border-solid border-white bg-white text-black ${state.password.length < 8 ? 'cursor-not-allowed opacity-50' : ''}`}
+                  disabled={state.password.length < 8}
+                  className={`min-h-[56px] w-full rounded-[30px] border border-solid border-white bg-white text-black ${
+                     state.password.length < 8
+                        ? 'cursor-not-allowed opacity-50'
+                        : ''
+                  }`}
                >
                   Login
                </button>

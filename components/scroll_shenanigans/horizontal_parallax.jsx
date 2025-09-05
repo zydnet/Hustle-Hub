@@ -42,7 +42,7 @@
  * - Text opacity is animated based on how close it is to filling the screen.
  */
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 export default function HParallax({ featurePos }) {
@@ -68,9 +68,12 @@ export default function HParallax({ featurePos }) {
    const [isFill, setIsFill] = useState(false);
 
    const featureRect = useRef(0);
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+
+   // Initialize feature rect
    useEffect(() => {
-      featureRect.current = featurePos.current.getBoundingClientRect();
+      if (featurePos && featurePos.current) {
+         featureRect.current = featurePos.current.getBoundingClientRect();
+      }
    }, [featurePos]);
 
    useEffect(() => {
@@ -106,9 +109,11 @@ export default function HParallax({ featurePos }) {
       winW.current = window.innerWidth;
       const handleResize = () => {
          setTimeout(() => {
-            featureRect.current = featurePos.current.getBoundingClientRect();
-            offs.current =
-               featureRect.current.bottom + window.scrollY - winH.current;
+            if (featurePos && featurePos.current) {
+               featureRect.current = featurePos.current.getBoundingClientRect();
+               offs.current =
+                  featureRect.current.bottom + window.scrollY - winH.current;
+            }
             prev.current = winH.current;
             winH.current = window.innerHeight;
             winW.current = window.innerWidth;
@@ -118,9 +123,9 @@ export default function HParallax({ featurePos }) {
       return () => {
          window.removeEventListener('resize', handleResize);
       };
-   }, []);
+   }, [featurePos]);
 
-   const handleScroll = () => {
+   const handleScroll = useCallback(() => {
       if (window.innerHeight >= window.innerWidth) {
          setH(() => window.scrollY - offs.current);
          setW(() => window.scrollY - offs.current);
@@ -129,7 +134,7 @@ export default function HParallax({ featurePos }) {
          setW(() => window.scrollY - offs.current);
       }
       // console.log(window.scrollY - offs.current, offs.current, window.scrollY);
-   };
+   }, []);
 
    useEffect(() => {
       if (offs.current == 0) {
@@ -153,7 +158,8 @@ export default function HParallax({ featurePos }) {
          }
          window.removeEventListener('scroll', handleScroll);
       };
-   }, [activate]);
+   }, [activate, handleScroll]);
+
    useEffect(() => {
       const observer = new IntersectionObserver(
          ([entry]) => {
@@ -197,7 +203,7 @@ export default function HParallax({ featurePos }) {
          }
       } else setIsFill(false);
       //console.log('fill status', isFill, horizontalOffs.current);
-   }, [h, w]);
+   }, [h, w, windH, isFill]);
 
    useEffect(() => {
       if (isFill && scrolledPast) {
@@ -205,7 +211,7 @@ export default function HParallax({ featurePos }) {
          hParallaxOffs.current = h;
       }
       // console.log(h, 'here is translate offsest');
-   }, [isFill]);
+   }, [isFill, h, scrolledPast]);
 
    useEffect(() => {
       const onScroll = () => {
@@ -223,7 +229,7 @@ export default function HParallax({ featurePos }) {
 
       window.addEventListener('scroll', onScroll);
       return () => window.removeEventListener('scroll', onScroll);
-   }, []);
+   }, [h]);
 
    const getMinHeight = () => {
       if (winW.current <= 640) {
@@ -343,8 +349,8 @@ export default function HParallax({ featurePos }) {
                               {/* <div className='h-[1px] my-[0.5vw] bg max-sm:hidden-black'></div> */}
                               <p className="max-w-[10vw] leading-[.7vw] text-[#575757] max-sm:hidden max-sm:text-[2vw] max-sm:leading-[1.5vw] sm:text-[0.6vw]">
                                  <i>&quot;I&apos;m tired boss&quot;</i>
-                                 <br /> HustleHub plans to expand in every dev's
-                                 computer
+                                 <br /> HustleHub plans to expand in every
+                                 dev&apos;s computer
                               </p>
                            </div>
                         </div>
@@ -409,7 +415,7 @@ export default function HParallax({ featurePos }) {
                                  Relating and Crying
                               </p>
                               <p className="max-w-[10vw] leading-[.7vw] text-[#575757] max-sm:hidden max-sm:text-[2vw] max-sm:leading-[1.5vw] sm:text-[0.6vw]">
-                                 Turns out it&apos;s not just me .
+                                 Turns out it&apos;s not just me.
                               </p>
                            </div>
                         </div>

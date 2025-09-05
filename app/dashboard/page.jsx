@@ -27,7 +27,7 @@ export default function Dashboard() {
          setProgress(1);
          router.push('/dashboard/home');
       }, 1200); // small delay to show loader
-   }, []);
+   }, [addNotification, router]);
 
    return (
       <div className="absolute top-0 flex min-h-dvh min-w-[100vw] justify-center bg-black">
