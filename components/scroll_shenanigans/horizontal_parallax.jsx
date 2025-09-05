@@ -406,7 +406,7 @@ export default function HParallax({ featurePos }) {
                                  Relating and Crying
                               </p>
                               <p className="max-w-[10vw] leading-[.7vw] text-[#575757] max-sm:hidden max-sm:text-[2vw] max-sm:leading-[1.5vw] sm:text-[0.6vw]">
-                                 Turns out it's not just me .
+                                 Turns out it&apos;s not just me .
                               </p>
                            </div>
                         </div>
