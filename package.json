@@ -1,0 +1,45 @@
+{
+   "name": "hustle-Hub",
+   "version": "0.1.0",
+   "private": true,
+   "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint"
+   },
+   "dependencies": {
+      "@emotion/react": "^11.13.0",
+      "@emotion/styled": "^11.13.0",
+      "@motionone/utils": "^10.18.0",
+      "@mui/material": "^5.16.4",
+      "@mui/x-date-pickers": "^7.11.0",
+      "@react-spring/three": "^10.0.1",
+      "@react-three/fiber": "^8.13.2",
+      "@shadergradient/react": "^2.0.25",
+      "axios": "^1.7.2",
+      "chroma-js": "^2.4.2",
+      "dayjs": "^1.11.11",
+      "framer-motion": "^11.5.4",
+      "lenis": "^1.1.13",
+      "next": "^14.2.32",
+      "react": "^18",
+      "react-dom": "^18",
+      "react-select": "^5.8.0",
+      "three": "^0.177.0",
+      "uuid": "^11.1.0"
+   },
+   "devDependencies": {
+      "@types/three": "^0.177.0",
+      "eslint": "^8.57.1",
+      "eslint-config-next": "14.2.3",
+      "eslint-config-prettier": "^10.0.1",
+      "eslint-plugin-prettier": "^5.2.3",
+      "eslint-plugin-react": "^7.37.4",
+      "eslint-plugin-tailwindcss": "^3.18.0",
+      "postcss": "^8",
+      "prettier": "^3.4.2",
+      "prettier-plugin-tailwindcss": "^0.6.11",
+      "tailwindcss": "^3.4.4"
+   }
+}
