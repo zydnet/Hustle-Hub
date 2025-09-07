@@ -6,7 +6,7 @@
 <img width="1486" height="840" alt="frontpage" src="public/assets/frontpage.png" />
 
 
-Hustle-Hub is a web application designed to help users track job applications, manage networking contacts, schedule meetings, and analyze progress—all in one place.  
+Hustle-Hub is a web application designed to help users track job applications, manage networking contacts, schedule meetings, and analyze progress - ALL IN ONE PLACE.  
 Its intuitive dashboard makes it easy to stay organized and on top of your career journey.
 
 ## Features
