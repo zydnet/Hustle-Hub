@@ -123,7 +123,7 @@ export default function Status({ hw }) {
                   : null,
          };
          const createdApp = await jobApplicationsAPI.create(appWithId);
-         setApplications((prev) => [...prev.filter((a) => a), createdApp]); // filter out any undefined
+         setApplications((prev) => [...prev, createdApp]);
          addNotification('Job application added successfully!', 'success');
       } catch (error) {
          addNotification(
@@ -186,23 +186,39 @@ export default function Status({ hw }) {
             />
 
             {/* Kanban Board */}
-            <div className="mt-4 flex min-h-[400px] w-full snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
+            <div className="mt-6 flex min-h-[500px] w-full snap-x snap-mandatory gap-6 overflow-x-auto pb-4">
                {columns.map((column) => (
                   <div
                      key={column}
-                     className="min-h-[300px] w-56 shrink-0 snap-start rounded-lg border-2 border-dashed bg-gray-100 p-3"
+                     className="min-h-[400px] w-72 shrink-0 snap-start rounded-xl border border-gray-200/60 bg-gradient-to-b from-gray-50 to-white p-4 shadow-sm"
                   >
-                     <div className="mb-3 text-center text-lg font-bold text-gray-700">
-                        {column}
-                        <span className="ml-2 text-sm text-gray-500">
-                           (
+                     <div className="mb-4 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                           <div
+                              className={`h-3 w-3 rounded-full ${column === 'Wishlist'
+                                    ? 'bg-yellow-400'
+                                    : column === 'Applied'
+                                       ? 'bg-blue-400'
+                                       : column === 'Interview'
+                                          ? 'bg-purple-400'
+                                          : column === 'Offered'
+                                             ? 'bg-green-400'
+                                             : column === 'Accepted'
+                                                ? 'bg-emerald-500'
+                                                : 'bg-red-400'
+                                 }`}
+                           ></div>
+                           <h3 className="text-lg font-bold text-gray-800">
+                              {column}
+                           </h3>
+                        </div>
+                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-200 text-xs font-bold text-gray-600">
                            {
                               applications.filter(
                                  (app) => app?.status === column
                               ).length
                            }
-                           )
-                        </span>
+                        </div>
                      </div>
 
                      <div className="space-y-3">
@@ -223,121 +239,227 @@ export default function Status({ hw }) {
                            .map((app) => (
                               <div
                                  key={app.id}
-                                 className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm"
+                                 className="group relative overflow-hidden rounded-xl border border-gray-200/60 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-100/50"
                               >
-                                 <div className="text-lg font-bold text-gray-800">
-                                    {app.company}
+                                 {/* Status indicator */}
+                                 <div className="absolute right-3 top-3">
+                                    <div
+                                       className={`h-2 w-2 rounded-full ${app.status === 'Wishlist'
+                                             ? 'bg-yellow-400'
+                                             : app.status === 'Applied'
+                                                ? 'bg-blue-400'
+                                                : app.status === 'Interview'
+                                                   ? 'bg-purple-400'
+                                                   : app.status === 'Offered'
+                                                      ? 'bg-green-400'
+                                                      : app.status === 'Accepted'
+                                                         ? 'bg-emerald-500'
+                                                         : 'bg-red-400'
+                                          }`}
+                                    ></div>
                                  </div>
-                                 <div className="mb-2 text-sm text-gray-600">
-                                    {app.role}
+
+                                 {/* Company Logo Placeholder */}
+                                 <div className="mb-3 flex items-center gap-3">
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 text-sm font-bold text-white">
+                                       {app.company.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                       <div className="truncate text-lg font-bold text-gray-800">
+                                          {app.company}
+                                       </div>
+                                       <div className="truncate text-sm text-gray-600">
+                                          {app.role}
+                                       </div>
+                                    </div>
                                  </div>
 
-                                 {app.deadline && (
-                                    <div className="mb-2 text-xs text-gray-500">
-                                       Deadline: {app.deadline}
-                                    </div>
-                                 )}
-                                 {app.appliedDate && (
-                                    <div className="mb-2 text-xs text-blue-600">
-                                       Applied: {app.appliedDate}
-                                    </div>
-                                 )}
-                                 {app.interviewDate && (
-                                    <div className="mb-2 text-xs text-green-600">
-                                       Interview: {app.interviewDate}
-                                    </div>
-                                 )}
-
-                                 {app.link && (
-                                    <a
-                                       href={app.link}
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       className="mb-2 block text-xs text-blue-500 underline"
-                                    >
-                                       Job Link
-                                    </a>
-                                 )}
-
-                                 {app.notes && (
-                                    <div className="mb-2 text-xs italic text-gray-600">
-                                       {app.notes}
-                                    </div>
-                                 )}
-
-                                 {/* Action buttons */}
-                                 <div className="mb-2 flex flex-wrap gap-1">
-                                    <button
-                                       onClick={() => startEditing(app)}
-                                       className="rounded bg-blue-100 px-2 py-1 text-xs text-blue-700 transition-colors hover:bg-blue-200"
-                                    >
-                                       Edit
-                                    </button>
-
-                                    {columns
-                                       .filter((col) => col !== app.status)
-                                       .slice(0, 2)
-                                       .map((newStatus) => (
-                                          <button
-                                             key={newStatus}
-                                             onClick={() =>
-                                                handleStatusChange(
-                                                   app.id,
-                                                   newStatus
-                                                )
-                                             }
-                                             className="rounded bg-gray-200 px-2 py-1 text-xs transition-colors hover:bg-gray-300"
+                                 {/* Dates Section */}
+                                 <div className="mb-3 space-y-1">
+                                    {app.deadline && (
+                                       <div className="flex items-center gap-2 text-xs text-gray-500">
+                                          <svg
+                                             className="h-3 w-3"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             viewBox="0 0 24 24"
                                           >
-                                             → {newStatus}
-                                          </button>
-                                       ))}
+                                             <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                             />
+                                          </svg>
+                                          <span className="font-medium">
+                                             Deadline:
+                                          </span>
+                                          <span className="text-gray-700">
+                                             {app.deadline}
+                                          </span>
+                                       </div>
+                                    )}
+                                    {app.appliedDate && (
+                                       <div className="flex items-center gap-2 text-xs text-blue-600">
+                                          <svg
+                                             className="h-3 w-3"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             viewBox="0 0 24 24"
+                                          >
+                                             <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                             />
+                                          </svg>
+                                          <span className="font-medium">
+                                             Applied:
+                                          </span>
+                                          <span className="text-blue-700">
+                                             {app.appliedDate}
+                                          </span>
+                                       </div>
+                                    )}
+                                    {app.interviewDate && (
+                                       <div className="flex items-center gap-2 text-xs text-green-600">
+                                          <svg
+                                             className="h-3 w-3"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             viewBox="0 0 24 24"
+                                          >
+                                             <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                             />
+                                          </svg>
+                                          <span className="font-medium">
+                                             Interview:
+                                          </span>
+                                          <span className="text-green-700">
+                                             {app.interviewDate}
+                                          </span>
+                                       </div>
+                                    )}
                                  </div>
 
-                                 {/* More actions dropdown */}
+                                 {/* Notes Section */}
+                                 {app.notes && (
+                                    <div className="mb-3 rounded-lg bg-gray-50 p-2">
+                                       <div className="text-xs italic text-gray-600">
+                                          &ldquo;{app.notes}&rdquo;
+                                       </div>
+                                    </div>
+                                 )}
+
+                                 {/* Job Link */}
+                                 {app.link && (
+                                    <div className="mb-3">
+                                       <a
+                                          href={app.link}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="inline-flex items-center gap-1 text-xs text-blue-600 transition-colors hover:text-blue-800"
+                                       >
+                                          <svg
+                                             className="h-3 w-3"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             viewBox="0 0 24 24"
+                                          >
+                                             <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                             />
+                                          </svg>
+                                          View Job Posting
+                                       </a>
+                                    </div>
+                                 )}
+
+                                 {/* Action Buttons */}
                                  <div className="flex items-center justify-between">
                                     <div className="flex gap-1">
+                                       <button
+                                          onClick={() => startEditing(app)}
+                                          className="rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 transition-all hover:bg-blue-100 hover:shadow-sm"
+                                       >
+                                          Edit
+                                       </button>
                                        <button
                                           onClick={() =>
                                              deleteApplication(app.id)
                                           }
-                                          className="text-xs text-red-500 underline hover:text-red-700"
+                                          className="rounded-lg bg-red-50 px-3 py-1.5 text-xs font-medium text-red-700 transition-all hover:bg-red-100 hover:shadow-sm"
                                        >
                                           Delete
                                        </button>
                                     </div>
 
-                                    {columns.filter((col) => col !== app.status)
-                                       .length > 2 && (
-                                       <select
-                                          onChange={(e) => {
-                                             if (e.target.value) {
-                                                handleStatusChange(
-                                                   app.id,
-                                                   e.target.value
-                                                );
-                                                e.target.value = '';
-                                             }
-                                          }}
-                                          className="rounded border border-gray-300 px-1 py-0.5 text-xs"
-                                          defaultValue=""
-                                       >
-                                          <option value="">More...</option>
-                                          {columns
-                                             .filter(
-                                                (col) => col !== app.status
-                                             )
-                                             .slice(2)
-                                             .map((status) => (
-                                                <option
-                                                   key={status}
-                                                   value={status}
-                                                >
-                                                   → {status}
-                                                </option>
-                                             ))}
-                                       </select>
-                                    )}
+                                    {/* Status Change Buttons */}
+                                    <div className="flex gap-1">
+                                       {columns
+                                          .filter((col) => col !== app.status)
+                                          .slice(0, 2)
+                                          .map((newStatus) => (
+                                             <button
+                                                key={newStatus}
+                                                onClick={() =>
+                                                   handleStatusChange(
+                                                      app.id,
+                                                      newStatus
+                                                   )
+                                                }
+                                                className="rounded-lg bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 transition-all hover:bg-gray-200 hover:shadow-sm"
+                                             >
+                                                → {newStatus}
+                                             </button>
+                                          ))}
+                                    </div>
                                  </div>
+
+                                 {/* More Actions Dropdown */}
+                                 {columns.filter((col) => col !== app.status)
+                                    .length > 2 && (
+                                       <div className="mt-2 flex justify-end">
+                                          <select
+                                             onChange={(e) => {
+                                                if (e.target.value) {
+                                                   handleStatusChange(
+                                                      app.id,
+                                                      e.target.value
+                                                   );
+                                                   e.target.value = '';
+                                                }
+                                             }}
+                                             className="rounded-lg border border-gray-200 bg-white px-2 py-1 text-xs text-gray-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                             defaultValue=""
+                                          >
+                                             <option value="">
+                                                More actions...
+                                             </option>
+                                             {columns
+                                                .filter(
+                                                   (col) => col !== app.status
+                                                )
+                                                .slice(2)
+                                                .map((status) => (
+                                                   <option
+                                                      key={status}
+                                                      value={status}
+                                                   >
+                                                      → {status}
+                                                   </option>
+                                                ))}
+                                          </select>
+                                       </div>
+                                    )}
                               </div>
                            ))}
                      </div>

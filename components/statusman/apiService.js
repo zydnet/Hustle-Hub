@@ -38,7 +38,8 @@ export const jobApplicationsAPI = {
          const existing = JSON.parse(
             localStorage.getItem('job_applications') || '[]'
          );
-         const newApp = { ...application, id: Date.now() };
+         // Use the provided ID or generate one if not provided
+         const newApp = { ...application, id: application.id || Date.now() };
          const updated = [...existing, newApp];
          localStorage.setItem('job_applications', JSON.stringify(updated));
          return newApp;
